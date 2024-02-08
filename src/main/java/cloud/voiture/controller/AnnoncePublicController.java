@@ -4,8 +4,10 @@ import cloud.voiture.service.AnnonceFavorisService;
 import cloud.voiture.service.AnnonceService;
 import cloud.voiture.model.Annonce;
 import cloud.voiture.model.AnnonceFavoris;
+import cloud.voiture.model.Marque;
 import cloud.voiture.model.ResponseWrap;
 import cloud.voiture.model.request.FiltreAnnonceReq;
+import cloud.voiture.repository.MarqueRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,13 @@ public class AnnoncePublicController {
 
     @Autowired
     private AnnonceService annonceService;
+    @Autowired
+    private MarqueRepository marqueRepository;
+
+    @GetMapping("marque")
+    public ResponseWrap<List<Marque>> getAllMarque() {
+        return ResponseWrap.success(marqueRepository.findByEtat(1));
+    }
 
     // mahita annonce rehetra na tsy connecter aza
     @GetMapping("accueil")
@@ -45,7 +54,6 @@ public class AnnoncePublicController {
         return ResponseWrap.error("id not found");
     }
 
-    
     @ResponseBody
     @RequestMapping(value = "/filtre", method = RequestMethod.POST)
     public List<Annonce> filtreAnnonce(@RequestBody FiltreAnnonceReq filtreAnnonceReq) {
