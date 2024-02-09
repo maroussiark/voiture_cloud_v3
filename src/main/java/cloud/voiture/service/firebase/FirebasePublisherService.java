@@ -32,7 +32,8 @@ public class FirebasePublisherService {
             String registrationToken) throws FirebaseMessagingException {
         Message msg = Message.builder()
                 .setToken(registrationToken)
-                .putData("body", message).setNotification(Notification.builder().setBody(message).build())
+                .putData("body", message)
+                .setNotification(Notification.builder().setBody("Vous avez recu un nouveau message").build())
                 .build();
 
         String id = fcm.send(msg);

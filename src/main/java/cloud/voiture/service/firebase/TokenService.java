@@ -22,7 +22,7 @@ public class TokenService {
         return tokenRepository.findById(tokenId).orElse(null);
     }
 
-    public void deleteToken(String tokenId) {
-        tokenRepository.deleteById(tokenId);
+    public void deleteToken(int idUtilisateur, String token) {
+        tokenRepository.deleteByIdUtilisateurAndToken(idUtilisateur, token);
     }
 }

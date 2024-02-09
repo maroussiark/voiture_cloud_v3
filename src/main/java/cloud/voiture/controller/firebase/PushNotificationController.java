@@ -35,4 +35,17 @@ public class PushNotificationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
+
+    @PostMapping("/unregisterDeviceToken")
+    public ResponseEntity unregisterDeviceToken(@RequestBody String deviceToken, HttpServletRequest request) {
+        try {
+            System.out.println("Received device token: " + deviceToken);
+            tokenService.deleteToken(annonceService.getIdUtilisateurFromJwt(request), deviceToken);
+            return ResponseEntity
+                    .status(HttpStatus.OK).body("Deleted");
+        } catch (Exception e) {
+            ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+    }
 }

@@ -8,4 +8,6 @@ import cloud.voiture.model.firebase.Token;
 
 public interface TokenRepository extends MongoRepository<Token, String> {
     Token findByIdUtilisateur(int idUtilisateur);
+
+    Token deleteByIdUtilisateurAndToken(int idUtilisateur, String token);
 }
