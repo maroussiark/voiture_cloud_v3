@@ -38,8 +38,10 @@ public class ImageUploadService {
     private void initializeFirebaseApp() {
         try {
 
-            if (FirebaseApp.getApps().isEmpty()) {
-                Resource resource = new ClassPathResource("firebase.json");
+            try {
+                FirebaseApp.getInstance();
+            } catch (IllegalStateException e) {
+                 Resource resource = new ClassPathResource("firebase.json");
                 InputStream serviceAccount = resource.getInputStream();
 
                 FirebaseOptions options = new FirebaseOptions.Builder()
@@ -49,6 +51,7 @@ public class ImageUploadService {
 
                 FirebaseApp.initializeApp(options);
             }
+                
 
         } catch (IOException e) {
             e.printStackTrace();
