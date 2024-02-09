@@ -14,8 +14,14 @@ public class TokenService {
     private TokenRepository tokenRepository;
 
     public Token createOrUpdateToken(Token token) {
-        token.setTimestamp(LocalDateTime.now());
-        return tokenRepository.save(token);
+        if (tokenRepository.findByIdUtilisateurAndToken(token.getIdUtilisateur(), token.getToken()).isPresent()) {
+            Token tk = tokenRepository.findByIdUtilisateurAndToken(token.getIdUtilisateur(), token.getToken()).get();
+            tk.setTimestamp(LocalDateTime.now());
+            return tokenRepository.save(tk);
+        } else {
+            token.setTimestamp(LocalDateTime.now());
+            return tokenRepository.save(token);
+        }
     }
 
     public Token getTokenById(String tokenId) {
